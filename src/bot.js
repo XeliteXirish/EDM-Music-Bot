@@ -5,6 +5,7 @@ const fs = require('fs');
 const client = exports.client = new Discord.Client();
 
 const config = require('../config.json');
+let dispatcher = null;
 
 client.on('ready', () => {
     console.log(`Connected to ${client.guilds.size} servers!`);
@@ -18,7 +19,6 @@ client.on('message', msg => {
     const args = msg.content.split(' ').splice(2);
     let command = msg.content.split(' ')[1];
 
-    let dispatcher = null;
 
     if (command === 'join'){
         let userVoiceChannel = msg.member.voiceChannel;
