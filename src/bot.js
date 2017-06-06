@@ -5,7 +5,6 @@ const fs = require('fs');
 const client = exports.client = new Discord.Client();
 
 const config = require('../config.json');
-let dispatcher = null;
 
 client.on('ready', () => {
     console.log(`Connected to ${client.guilds.size} servers!`);
@@ -26,7 +25,7 @@ client.on('message', msg => {
 
         userVoiceChannel.join().then(connection => {
             const stream = ytdl(config.playingUrl, {filter: 'audioonly'});
-            dispatcher = connection.playStream(stream);
+            const dispatcher = connection.playStream(stream);
 
             dispatcher.on('end', () => {userVoiceChannel.leave()});
         })
@@ -40,7 +39,6 @@ client.on('message', msg => {
         if (!msg.member.hasPermission(config.moderatorPerm)) return msg.reply(`Sorry but you need the permission **${config.moderatorPerm}** to use this command!`);
 
         let volume = args[0] / 100; // Think this should work
-        dispatcher.setVolume(volume);
 
         msg.reply(`The volume has been successfully changed to ${volume}`);
     }
