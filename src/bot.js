@@ -23,12 +23,11 @@ client.on('message', msg => {
         let userVoiceChannel = msg.member.voiceChannel;
         if (!userVoiceChannel) return msg.reply(`You must be in a voice channel!`);
 
-        userVoiceChannel.join().then(connection => {
-            const stream = ytdl(config.playingUrl, {filter: 'audioonly'});
-            const dispatcher = connection.playStream(stream);
-
-            dispatcher.on('end', () => {userVoiceChannel.leave()});
-        })
+        userVoiceChannel.join().then(connnection => {
+            const stream = ytdl("https://www.youtube.com/watch?v=dQw4w9WgXcQ", {filter: 'audioonly'});
+            const dispatcher = connnection.playStream(stream);
+            dispatcher.on('end', () => userVoiceChannel.leave());
+        });
 
     }else if (command === 'volume') {
 
